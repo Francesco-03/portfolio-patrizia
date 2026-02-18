@@ -183,6 +183,9 @@ export async function getOperaBySlug(slug: string): Promise<Opera | null> {
   }
 }
 
+/**
+ * Prende le categorie con una chiamata al database (potenzialmente va tolta che spreca call API limitate)
+ */
 export async function getCategories(): Promise<{
   tecnica: string[];
   tipo: string[];
