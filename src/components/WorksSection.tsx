@@ -14,7 +14,10 @@ export default function WorksSection({
 }) {
   const y = useTransform(scrollYProgress, [0.33, 0.66], [0, 100]);
   return (
-    <section className="relative z-10 min-h-screen w-full flex items-center justify-center px-6 md:px-20 py-20">
+    <section
+      id="works"
+      className="relative z-10 min-h-screen w-full flex items-center justify-center px-6 md:px-20 py-20"
+    >
       <motion.div style={{ y }} className="max-w-6xl w-full">
         <motion.div
           initial={{ opacity: 0, y: 50 }}

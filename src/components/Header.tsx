@@ -36,6 +36,15 @@ export default function Header() {
               </Link>
             </li>
             <li>
+              <Link
+                href="/#biography"
+                className="hover:text-arancione transition"
+              >
+                Chi Sono
+              </Link>
+            </li>
+
+            <li>
               <Link href="/gallery" className="hover:text-arancione transition">
                 Galleria
               </Link>
@@ -85,11 +94,11 @@ export default function Header() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="absolute top-full w-full left-0 flex flex-col items-center py-4 z-50 bg-sfondo-card h-fit border-t-2 border-arancione"
+              className="absolute top-full w-full left-0 flex flex-col items-center py-4 z-50 bg-sfondo-card h-fit"
             >
               <ul className="flex w-11/12 mx-auto flex-col gap-6 text-lg font-semibold">
                 <li className="border-b w-full px-5 pb-2">
-                  <Link href="/">Home</Link>
+                  <Link href="/#presentation">Home</Link>
                 </li>
                 <li className="border-b w-full px-5 pb-2">
                   <Link href="/gallery">Galleria</Link>

@@ -1,4 +1,4 @@
-import { getOpere, getCategories } from "@/lib/strapiApi";
+import { getOpere } from "@/lib/strapiApi";
 import GalleryClient from "@/components/GalleryClient";
 
 interface GalleryPageProps {
@@ -20,8 +20,15 @@ export default async function Gallery({ searchParams }: GalleryPageProps) {
   // });
 
   const opere = await getOpere();
-  // Fetcha tutte le categorie disponibili
-  const categories = await getCategories();
+
+  // Tecniche legate ai tipi di opera
+  const categories = {
+    tipo: ["Pittura", "Scultura"],
+    tecnichePerTipo: {
+      Pittura: ["Olio su tela", "Acquerello", "Disegno"],
+      Scultura: ["Terracotta", "Terracotta Smaltata", "Tecnica mista"],
+    },
+  };
 
   return <GalleryClient opere={opere} categories={categories} />;
 }

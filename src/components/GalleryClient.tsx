@@ -10,8 +10,10 @@ import { X } from "lucide-react";
 interface GalleryClientProps {
   opere: Opera[];
   categories: {
-    tecnica: string[];
     tipo: string[];
+    tecnichePerTipo: {
+      [key: string]: string[];
+    };
   };
 }
 
@@ -132,8 +134,14 @@ export default function GalleryClient({
   //   searchParams.get("tipo") || "",
   // );
 
+  // Filtri attivi che applicano il filtro
   const [selectedTecnica, setSelectedTecnica] = useState("");
   const [selectedTipo, setSelectedTipo] = useState("");
+
+  // Filtri temporanei nei select (non filtrano finché non si clicca Cerca)
+  const [tempTecnica, setTempTecnica] = useState("");
+  const [tempTipo, setTempTipo] = useState("");
+
   // Aggiorna l'URL con i nuovi filtri
   // const updateFilters = (search: string, tecnica: string, tipo: string) => {
   //   const params = new URLSearchParams();
@@ -153,18 +161,28 @@ export default function GalleryClient({
   });
 
   const handleTecnicaChange = (value: string) => {
-    setSelectedTecnica(value);
+    setTempTecnica(value);
     // updateFilters(searchQuery, value, selectedTipo);
   };
 
   const handleTipoChange = (value: string) => {
-    setSelectedTipo(value);
+    setTempTipo(value);
+    // Reset tecnica quando cambia il tipo
+    setTempTecnica("");
     // updateFilters(searchQuery, selectedTecnica, value);
+  };
+
+  // Applica i filtri quando si clicca il pulsante Cerca
+  const handleSearch = () => {
+    setSelectedTecnica(tempTecnica);
+    setSelectedTipo(tempTipo);
   };
 
   const resetFilters = () => {
     setSelectedTecnica("");
     setSelectedTipo("");
+    setTempTecnica("");
+    setTempTipo("");
     // router.push("/gallery");
   };
 
@@ -182,7 +200,10 @@ export default function GalleryClient({
             transition={{ duration: 0.5, delay: 0.1 }}
             className="lg:col-span-4"
           >
-            <div className="bg-sfondo-card rounded-lg p-6 sticky top-20">
+            <div
+              className="bg-sfondo-card rounded-lg p-6 sticky top-20"
+              style={{ fontFamily: "var(--font-lato)" }}
+            >
               <h2 className="text-lg font-bold text-gray-900 mb-6">Filtri</h2>
 
               <div className="lg:flex lg:w-full lg:gap-x-10">
@@ -192,7 +213,7 @@ export default function GalleryClient({
                     Tipo
                   </label>
                   <select
-                    value={selectedTipo}
+                    value={tempTipo}
                     onChange={(e) => handleTipoChange(e.target.value)}
                     className="w-full px-3 py-2 border-2 border-verde rounded-lg focus:outline-none focus:border-arancione transition-colors duration-300 text-sm"
                   >
@@ -211,17 +232,30 @@ export default function GalleryClient({
                     Tecnica
                   </label>
                   <select
-                    value={selectedTecnica}
+                    value={tempTecnica}
                     onChange={(e) => handleTecnicaChange(e.target.value)}
-                    className="w-full px-3 py-2 border-2 border-verde rounded-lg focus:outline-none focus:border-arancione transition-colors duration-300 text-sm"
+                    disabled={!tempTipo}
+                    className="w-full px-3 py-2 border-2 border-verde rounded-lg focus:outline-none focus:border-arancione transition-colors duration-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <option value="">Tutte le tecniche</option>
-                    {categories.tecnica.map((tecnica) => (
-                      <option key={tecnica} value={tecnica}>
-                        {tecnica}
-                      </option>
-                    ))}
+                    {tempTipo && categories.tecnichePerTipo[tempTipo]
+                      ? categories.tecnichePerTipo[tempTipo].map((tecnica) => (
+                          <option key={tecnica} value={tecnica}>
+                            {tecnica}
+                          </option>
+                        ))
+                      : null}
                   </select>
+                </div>
+
+                {/* Pulsante Cerca */}
+                <div className="mb-6 flex items-end">
+                  <button
+                    onClick={handleSearch}
+                    className="w-full px-6 py-2 bg-verde text-white font-semibold rounded-lg hover:bg-verde/90 transition-colors duration-300"
+                  >
+                    Cerca
+                  </button>
                 </div>
               </div>
 

@@ -12,7 +12,7 @@ export default function PresentationSection({
   const y = useTransform(scrollYProgress, [0, 0.33], [0, 100]);
 
   return (
-    <section className="relative z-10 min-h-screen w-full flex items-center justify-center px-6 md:px-20 py-20">
+    <section id="presentation" className="relative z-10 min-h-screen w-full flex items-center justify-center px-6 md:px-20 py-20">
       <motion.div
         style={{ y }}
         className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
@@ -28,7 +28,10 @@ export default function PresentationSection({
           <h1 className="text-6xl  md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
             Patrizia Pellegrini
           </h1>
-          <p className="text-lg leading-relaxed mb-8 pl-1">
+          <p
+            className="text-xl leading-relaxed mb-8 pl-1"
+            style={{ fontFamily: "var(--font-playfair)" }}
+          >
             Spaziare e perdersi nell&apos;arte per ritrovarsi...
           </p>
           <Link
