@@ -5,6 +5,7 @@ import { Opera } from "@/types/opera";
 import WorksSection from "./WorksSection";
 import PresentationSection from "./PresentationSection";
 import BiographySection from "./BiographySection";
+import EventsSection from "./EventsSection";
 
 export default function LandingPageClient({ opere }: { opere: Opera[] }) {
   const containerRef = useRef(null);

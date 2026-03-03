@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+// import { useRouter, useSearchParams } from "next/navigation";
 import OperaCard from "./OperaCard";
 import { Opera } from "@/types/opera";
 import { motion } from "framer-motion";
@@ -11,114 +11,8 @@ interface GalleryClientProps {
   opere: Opera[];
   categories: {
     tipo: string[];
-    tecnichePerTipo: {
-      [key: string]: string[];
-    };
   };
 }
-
-// Dati finti per test
-// const fakeOpere: Opera[] = [
-//   {
-//     id: 1,
-//     documentId: "fake-1",
-//     slug: "alba-sulla-montagna",
-//     Titolo: "Alba sulla Montagna",
-//     Descrizione:
-//       "Un'affascinante rappresentazione della luce all'alba sulle pendici montane",
-//     Categoria: "Paesaggio",
-//     Tecnica: "Olio su tela",
-//     Data: "2023",
-//     Tipo: "Pittura",
-//     Foto: [
-//       {
-//         id: 1,
-//         documentId: "photo-1",
-//         name: "alba",
-//         url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=500&fit=crop",
-//       },
-//     ],
-//   },
-//   {
-//     id: 2,
-//     documentId: "fake-2",
-//     slug: "fiori-primavera",
-//     Titolo: "Fiori di Primavera",
-//     Descrizione:
-//       "Una composizione delicata che cattura l'essenza della stagione",
-//     Categoria: "Natura morta",
-//     Tecnica: "Acquerello",
-//     Data: "2023",
-//     Tipo: "Pittura",
-//     Foto: [
-//       {
-//         id: 2,
-//         documentId: "photo-2",
-//         name: "fiori",
-//         url: "https://images.unsplash.com/photo-1490086690971-f8cdef2f3992?w=400&h=500&fit=crop",
-//       },
-//     ],
-//   },
-//   {
-//     id: 3,
-//     documentId: "fake-3",
-//     slug: "mare-tempestoso",
-//     Titolo: "Mare Tempestoso",
-//     Descrizione:
-//       "La forza bruta della natura espressa con colori intensi e movimenti dinamici",
-//     Categoria: "Paesaggio",
-//     Tecnica: "Olio su tela",
-//     Data: "2024",
-//     Tipo: "Pittura",
-//     Foto: [
-//       {
-//         id: 3,
-//         documentId: "photo-3",
-//         name: "mare",
-//         url: "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=400&h=500&fit=crop",
-//       },
-//     ],
-//   },
-//   {
-//     id: 4,
-//     documentId: "fake-4",
-//     slug: "abstract-blu",
-//     Titolo: "Astrazione in Blu",
-//     Descrizione:
-//       "Un'esplorazione astratta dei toni blu e delle forme geometriche",
-//     Categoria: "Astratto",
-//     Tecnica: "Acrilico su tela",
-//     Data: "2023",
-//     Tipo: "Pittura",
-//     Foto: [
-//       {
-//         id: 4,
-//         documentId: "photo-4",
-//         name: "abstract",
-//         url: "https://images.unsplash.com/photo-1578321272176-b04a17d68da9?w=400&h=500&fit=crop",
-//       },
-//     ],
-//   },
-//   {
-//     id: 5,
-//     documentId: "fake-5",
-//     slug: "contemplazione",
-//     Titolo: "Contemplazione",
-//     Descrizione: "Un ritratto che esprime profondità emotiva e introspezione",
-//     Categoria: "Ritratto",
-//     Tecnica: "Mista",
-//     Data: "2024",
-//     Tipo: "Pittura",
-//     Foto: [
-//       {
-//         id: 5,
-//         documentId: "photo-5",
-//         name: "ritratto",
-//         url: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=500&fit=crop",
-//       },
-//     ],
-//   },
-// ];
 
 export default function GalleryClient({
   opere,
@@ -161,27 +55,20 @@ export default function GalleryClient({
   });
 
   const handleTecnicaChange = (value: string) => {
-    setTempTecnica(value);
     // updateFilters(searchQuery, value, selectedTipo);
   };
 
   const handleTipoChange = (value: string) => {
     setTempTipo(value);
-    // Reset tecnica quando cambia il tipo
-    setTempTecnica("");
-    // updateFilters(searchQuery, selectedTecnica, value);
   };
 
   // Applica i filtri quando si clicca il pulsante Cerca
   const handleSearch = () => {
-    setSelectedTecnica(tempTecnica);
     setSelectedTipo(tempTipo);
   };
 
   const resetFilters = () => {
-    setSelectedTecnica("");
     setSelectedTipo("");
-    setTempTecnica("");
     setTempTipo("");
     // router.push("/gallery");
   };
@@ -210,41 +97,19 @@ export default function GalleryClient({
                 {/* Filtro Tipo */}
                 <div className="mb-6 flex-1">
                   <label className="block text-sm font-semibold mb-3 text-gray-700">
-                    Tipo
+                    Categoria
                   </label>
                   <select
                     value={tempTipo}
                     onChange={(e) => handleTipoChange(e.target.value)}
                     className="w-full px-3 py-2 border-2 border-verde rounded-lg focus:outline-none focus:border-arancione transition-colors duration-300 text-sm"
                   >
-                    <option value="">Tutti i tipi</option>
+                    <option value="">Tutte</option>
                     {categories.tipo.map((tipo) => (
                       <option key={tipo} value={tipo}>
                         {tipo}
                       </option>
                     ))}
-                  </select>
-                </div>
-
-                {/* Filtro Tecnica */}
-                <div className="mb-6 flex-1">
-                  <label className="block text-sm font-semibold mb-3 text-gray-700">
-                    Tecnica
-                  </label>
-                  <select
-                    value={tempTecnica}
-                    onChange={(e) => handleTecnicaChange(e.target.value)}
-                    disabled={!tempTipo}
-                    className="w-full px-3 py-2 border-2 border-verde rounded-lg focus:outline-none focus:border-arancione transition-colors duration-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <option value="">Tutte le tecniche</option>
-                    {tempTipo && categories.tecnichePerTipo[tempTipo]
-                      ? categories.tecnichePerTipo[tempTipo].map((tecnica) => (
-                          <option key={tecnica} value={tecnica}>
-                            {tecnica}
-                          </option>
-                        ))
-                      : null}
                   </select>
                 </div>
 

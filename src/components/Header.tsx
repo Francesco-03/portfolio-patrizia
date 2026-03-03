@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { div } from "framer-motion/client";
+import Image from "next/image";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -24,10 +24,17 @@ export default function Header() {
   }, []);
   return (
     <>
-      <header className="w-full py-2 md:pt-5 px-5 md:px-15 flex justify-between items-center relative text-verde">
-        <h1 className="text-xl lg:text-2xl font-bold text-verde">
-          Laboratorio di Patriziza
-        </h1>
+      <header className="w-full py-1 md:pt-5 px-5 md:px-15 flex justify-between items-center relative text-verde">
+        <div className="shrink-0">
+          <Image
+            src="/logo.svg"
+            alt="Logo"
+            width={60}
+            height={60}
+            className=" object-contain transition-transform duration-500"
+            priority
+          />
+        </div>
         <nav>
           <ul className="md:flex gap-6 text-lg font-semibold hidden">
             <li>

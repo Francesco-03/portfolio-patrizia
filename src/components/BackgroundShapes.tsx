@@ -19,10 +19,6 @@ export default function BackgroundShapes() {
     scrollY,
     (value) => Math.sin(value * 0.002) * -8,
   );
-  const wave = useTransform(
-    scrollY,
-    (v) => `translateY(${v * 0.1}px) scaleY(${1 + Math.sin(v * 0.002) * 0.05})`,
-  );
 
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">

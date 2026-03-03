@@ -1,12 +1,13 @@
 import qs from "qs";
 import { Opera } from "@/types/opera";
-
-interface FilterOptions {
-  search?: string;
-  tecnica?: string;
-  tipo?: string;
-  max?: number | null;
-}
+import {
+  FilterOptions,
+  StrapiQuery,
+  StrapiFilters,
+  StrapiItem,
+  StrapiResponse,
+  StrapiPhotoItem,
+} from "@/types/api_types";
 
 /**
  * Function to fetch data from Strapi Backend with optional filters
@@ -26,7 +27,7 @@ export async function getOpere(
   const path = "/api/operas";
   const url = new URL(path, baseUrl);
 
-  const query: any = {
+  const query: StrapiQuery = {
     fields: ["Titolo", "Descrizione", "slug", "documentId", "Tecnica", "Tipo"],
     populate: {
       Foto: {
@@ -37,7 +38,7 @@ export async function getOpere(
   };
 
   // Aggiungi filtri
-  const strapiFilters: any = {};
+  const strapiFilters: StrapiFilters = {};
 
   if (filters.search) {
     strapiFilters.$or = [
@@ -64,7 +65,7 @@ export async function getOpere(
 
   url.search = qs.stringify(query);
 
-  let data: any[] = [];
+  let data: StrapiItem[] = [];
 
   try {
     const res = await fetch(url.toString(), {
@@ -80,7 +81,7 @@ export async function getOpere(
     return [];
   }
 
-  return data.map((item: any) => {
+  return data.map((item: StrapiItem) => {
     const attrs = item.attributes ?? item;
 
     return {
@@ -92,17 +93,19 @@ export async function getOpere(
       Tipo: attrs.Tipo,
       Tecnica: attrs.Tecnica,
       Foto:
-        (attrs.Foto?.data
-          ? attrs.Foto.data.map((f: any) => {
-              const photoUrl = f.attributes?.url ?? f.url;
-              // Convert relative URLs to absolute
-              return {
-                id: f.id,
-                documentId: f.attributes?.documentId ?? f.documentId,
-                name: f.attributes?.name ?? f.name,
-                url: photoUrl,
-              };
-            })
+        ((attrs.Foto as Record<string, unknown> | undefined)?.data
+          ? (attrs.Foto as Record<string, Array<StrapiPhotoItem>>).data.map(
+              (f: StrapiPhotoItem) => {
+                const photoUrl = f.attributes?.url ?? f.url;
+                // Convert relative URLs to absolute
+                return {
+                  id: f.id,
+                  documentId: f.attributes?.documentId ?? f.documentId,
+                  name: f.attributes?.name ?? f.name,
+                  url: photoUrl,
+                };
+              },
+            )
           : attrs.Foto) || [],
     } as Opera;
   });
@@ -127,7 +130,7 @@ export async function getOperaBySlug(slug: string): Promise<Opera | null> {
   const path = "/api/operas";
   const url = new URL(path, baseUrl);
 
-  const query: any = {
+  const query: StrapiQuery = {
     filters: {
       slug: { $eq: slug },
     },
@@ -165,82 +168,22 @@ export async function getOperaBySlug(slug: string): Promise<Opera | null> {
       Categoria: attrs.Categoria,
       Data: attrs.Data,
       Foto:
-        (attrs.Foto?.data
-          ? attrs.Foto.data.map((f: any) => {
-              const photoUrl = f.attributes?.url ?? f.url;
-              return {
-                id: f.id,
-                documentId: f.attributes?.documentId ?? f.documentId,
-                name: f.attributes?.name ?? f.name,
-                url: photoUrl,
-              };
-            })
+        ((attrs.Foto as Record<string, unknown> | undefined)?.data
+          ? (attrs.Foto as Record<string, Array<StrapiPhotoItem>>).data.map(
+              (f: StrapiPhotoItem) => {
+                const photoUrl = f.attributes?.url ?? f.url;
+                return {
+                  id: f.id,
+                  documentId: f.attributes?.documentId ?? f.documentId,
+                  name: f.attributes?.name ?? f.name,
+                  url: photoUrl,
+                };
+              },
+            )
           : attrs.Foto) || [],
     } as Opera;
   } catch (error) {
     console.error("Strapi fetch error:", error);
     return null;
-  }
-}
-
-/**
- * Prende le categorie con una chiamata al database (potenzialmente va tolta che spreca call API limitate)
- */
-export async function getCategories(): Promise<{
-  tecnica: string[];
-  tipo: string[];
-}> {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_STRAPI_URL ??
-    process.env.NEXT_PUBLIC_STRAPI_API_URL;
-  if (!baseUrl) {
-    throw new Error(
-      "Missing Strapi base URL. Set NEXT_PUBLIC_STRAPI_URL (or NEXT_PUBLIC_STRAPI_API_URL).",
-    );
-  }
-
-  try {
-    // Recupera tutte le opere senza paginazione per avere l'intera lista
-    const path = "/api/operas";
-    const url = new URL(path, baseUrl);
-
-    const query = {
-      fields: ["Tecnica", "Tipo"],
-      pagination: { limit: 50 }, // Aumenta il limite se necessario
-    };
-
-    url.search = qs.stringify(query);
-
-    const res = await fetch(url.toString(), {
-      next: { revalidate: 3600 }, // Cache per 1 ora
-    });
-
-    if (!res.ok) {
-      throw new Error(`Strapi fetch failed: ${res.status}`);
-    }
-
-    const json = await res.json();
-    const data = json?.data ?? [];
-
-    // Estrai categorie univoche
-    const tecnicaSet = new Set<string>();
-    const tipoSet = new Set<string>();
-
-    data.forEach((item: any) => {
-      const attrs = item.attributes ?? item;
-      if (attrs.Tecnica) tecnicaSet.add(attrs.Tecnica);
-      if (attrs.Tipo) tipoSet.add(attrs.Tipo);
-    });
-
-    return {
-      tecnica: Array.from(tecnicaSet).sort(),
-      tipo: Array.from(tipoSet).sort(),
-    };
-  } catch (error) {
-    console.error("Error fetching categories from Strapi:", error);
-    return {
-      tecnica: [],
-      tipo: [],
-    };
   }
 }

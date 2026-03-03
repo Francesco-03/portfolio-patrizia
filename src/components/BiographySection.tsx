@@ -11,7 +11,10 @@ export default function BiographySection({
   const y = useTransform(scrollYProgress, [0.15, 0.48], [0, 100]);
 
   return (
-    <section id="biography" className="relative z-10 min-h-screen w-full flex items-center justify-center px-6 md:px-20 py-20">
+    <section
+      id="biography"
+      className="relative z-10 min-h-screen w-full flex items-center justify-center px-6 md:px-20 py-20"
+    >
       <motion.div
         style={{ y }}
         className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
@@ -26,7 +29,7 @@ export default function BiographySection({
           className="relative w-full aspect-4/5 rounded-2xl overflow-hidden shadow-2xl order-1 md:order-1"
         >
           <Image
-            src="/Homepage_cropped.png"
+            src="/biopic.jpeg"
             alt="Autobiografia di Patrizia"
             fill
             className="object-cover transition-transform duration-500"
@@ -39,7 +42,7 @@ export default function BiographySection({
           transition={{ duration: 0.8 }}
           className="order-2 md:order-2"
         >
-          <p className="text-md font-semibold uppercase tracking-widest text-arancione mb-4">
+          <p className="text-md font-semibold uppercase tracking-widest mb-4">
             Chi sono
           </p>
           <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
