@@ -17,9 +17,29 @@ const secondaryFont = Lato({
 });
 
 export const metadata: Metadata = {
-  title: "Patrizia's Portfolio",
+  title: {
+    default: "Patrizia Pellegrini",
+    template: "%s | Patrizia Pellegrini",
+  },
   description:
     "Portfolio di Patrizia Pellegrini - Artista contemporanea specializzata in pittura e scultura",
+  keywords: [
+    "Artista",
+    "Pittura",
+    "Scultura",
+    "Artista Contemporanea",
+    "Grosseto",
+  ],
+  metadataBase: new URL("https://patriziapellegrini.art"),
+  openGraph: {
+    title: "Patrizia Pellegrini | Artista contemporanea",
+    description:
+      "Portfolio di Patrizia Pellegrini, artista contemporanea di Grosseto",
+    url: "https://patriziapellegrini.art",
+    siteName: "Patrizia Pellegrini",
+    locale: "it_IT",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
