@@ -68,9 +68,15 @@ export async function getOpere(
   let data: StrapiItem[] = [];
 
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000); // 10 seconds timeout
+
     const res = await fetch(url.toString(), {
       next: { revalidate: revalidateSeconds },
+      signal: controller.signal,
     });
+    clearTimeout(timeout);
+
     if (!res.ok) {
       throw new Error(`Strapi fetch failed: ${res.status}`);
     }
@@ -78,6 +84,11 @@ export async function getOpere(
     data = json?.data ?? [];
   } catch (error) {
     console.error("Strapi fetch error:", error);
+    console.error(
+      "Base URL was:",
+      process.env.NEXT_PUBLIC_STRAPI_URL ||
+        process.env.NEXT_PUBLIC_STRAPI_API_URL,
+    );
     return [];
   }
 
@@ -144,9 +155,15 @@ export async function getOperaBySlug(slug: string): Promise<Opera | null> {
   url.search = qs.stringify(query);
 
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000); // 10 seconds timeout
+
     const res = await fetch(url.toString(), {
       next: { revalidate: 60 },
+      signal: controller.signal,
     });
+    clearTimeout(timeout);
+
     if (!res.ok) {
       throw new Error(`Strapi fetch failed: ${res.status}`);
     }
