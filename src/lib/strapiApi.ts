@@ -10,12 +10,46 @@ import {
 } from "@/types/api_types";
 
 /**
+ * Warm-up function to wake up Strapi if it's in cold start
+ * Runs once per page load, consumes only 1 request if needed
+ */
+async function warmupStrapi(): Promise<void> {
+  const baseUrl =
+    process.env.NEXT_PUBLIC_STRAPI_URL ??
+    process.env.NEXT_PUBLIC_STRAPI_API_URL;
+
+  if (!baseUrl) return;
+
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 3000); // 3 seconds max
+
+    const response = await fetch(`${baseUrl}/api/health`, {
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+
+    // Se Strapi non risponde (503 o timeout), aspetta prima di procedere
+    if (!response.ok) {
+      console.warn("Strapi is starting up, waiting 8 seconds...");
+      await new Promise((resolve) => setTimeout(resolve, 8000));
+    }
+  } catch (error) {
+    console.warn("Strapi warm-up check failed, waiting 8 seconds...");
+    await new Promise((resolve) => setTimeout(resolve, 8000));
+  }
+}
+
+/**
  * Function to fetch data from Strapi Backend with optional filters
  */
 export async function getOpere(
   filters: FilterOptions = {},
   revalidateSeconds = 60,
 ): Promise<Opera[]> {
+  // Warm up Strapi first
+  await warmupStrapi();
+
   const baseUrl =
     process.env.NEXT_PUBLIC_STRAPI_URL ??
     process.env.NEXT_PUBLIC_STRAPI_API_URL;
@@ -129,6 +163,9 @@ export async function getOpere(
  * Funzione per recuperare una singola opera per slug
  */
 export async function getOperaBySlug(slug: string): Promise<Opera | null> {
+  // Warm up Strapi first
+  await warmupStrapi();
+
   const baseUrl =
     process.env.NEXT_PUBLIC_STRAPI_URL ??
     process.env.NEXT_PUBLIC_STRAPI_API_URL;
