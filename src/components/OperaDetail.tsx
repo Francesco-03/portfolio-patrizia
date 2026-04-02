@@ -37,7 +37,7 @@ export default function OperaDetail({ opera }: OperaDetailProps) {
           className="space-y-8"
         >
           {/* Galleria Foto Grid */}
-          {opera.Foto && opera.Foto.length > 0 && (
+          {opera.foto && opera.foto.length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -45,7 +45,7 @@ export default function OperaDetail({ opera }: OperaDetailProps) {
               className="w-full"
             >
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {opera.Foto.map((photo, index) => (
+                {opera.foto.map((photo, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, scale: 0.95 }}
@@ -55,7 +55,7 @@ export default function OperaDetail({ opera }: OperaDetailProps) {
                   >
                     <Image
                       src={photo.url}
-                      alt={`${opera.Titolo} - foto ${index + 1}`}
+                      alt={`${opera.titolo} - foto ${index + 1}`}
                       fill
                       className="object-contain"
                     />
@@ -74,44 +74,33 @@ export default function OperaDetail({ opera }: OperaDetailProps) {
           >
             <div>
               <h1 className="text-4xl font-bold mb-2 text-gray-900">
-                {opera.Titolo}
+                {opera.titolo}
               </h1>
-              {opera.Data && (
-                <p className="text-lg text-verde font-semibold">{opera.Data}</p>
-              )}
+              {/* {opera.data && (
+                <p className="text-lg text-verde font-semibold">{opera.data}</p>
+              )} */}
             </div>
 
-            {opera.Descrizione && (
+            {opera.descrizione && (
               <div>
                 <h2 className="text-lg font-semibold text-gray-800 mb-2">
                   Descrizione
                 </h2>
                 <p className="text-gray-700 leading-relaxed">
-                  {opera.Descrizione}
+                  {opera.descrizione}
                 </p>
               </div>
             )}
 
             {/* Grid di informazioni */}
             <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-200">
-              {opera.Tipo && (
+              {opera.tipo && (
                 <div>
                   <p className="text-sm font-semibold text-gray-600 uppercase tracking-wide">
                     Categoria
                   </p>
                   <p className="text-lg text-verde font-semibold">
-                    {opera.Tipo}
-                  </p>
-                </div>
-              )}
-
-              {opera.Categoria && (
-                <div>
-                  <p className="text-sm font-semibold text-gray-600 uppercase tracking-wide">
-                    Categoria
-                  </p>
-                  <p className="text-lg text-verde font-semibold">
-                    {opera.Categoria}
+                    {opera.tipo}
                   </p>
                 </div>
               )}

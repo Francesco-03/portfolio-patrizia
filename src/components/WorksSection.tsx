@@ -37,7 +37,7 @@ export default function WorksSection({
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {opere.map((opera, i) => (
-            <OperaCard key={opera.id} opera={opera} index={i} />
+            <OperaCard key={opera._id} opera={opera} index={i} />
           ))}
         </div>
 

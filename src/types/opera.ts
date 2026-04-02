@@ -6,14 +6,10 @@ export interface Foto {
 }
 
 export interface Opera {
-  id: number;
-  documentId: string;
+  _id: string;
   slug: string;
-  Titolo: string;
-  Descrizione: string;
-  Categoria?: string;
-  Tecnica?: string;
-  Data?: string;
-  Tipo?: string;
-  Foto: Foto[];
+  titolo: string;
+  descrizione: string;
+  tipo: string;
+  foto: Foto[];
 }

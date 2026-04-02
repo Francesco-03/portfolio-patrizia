@@ -19,7 +19,7 @@ interface OperaCardProps {
 export default function OperaCard({ opera, index = 0 }: OperaCardProps) {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   // const hasMultiplePhotos = opera.Foto && opera.Foto.length > 1;
-  const photoToShow = opera.Foto && opera.Foto[currentPhotoIndex];
+  const photoToShow = opera.foto && opera.foto[currentPhotoIndex];
 
   // const handleDotClick = (photoIndex: number) => {
   //   setCurrentPhotoIndex(photoIndex);
@@ -44,7 +44,7 @@ export default function OperaCard({ opera, index = 0 }: OperaCardProps) {
           >
             <Image
               src={photoToShow.url}
-              alt={opera.Titolo}
+              alt={opera.titolo}
               fill
               className="object-contain rounded-md"
             />
@@ -72,7 +72,7 @@ export default function OperaCard({ opera, index = 0 }: OperaCardProps) {
         </div>
       )} */}
 
-        <h3 className="text-2xl font-bold mb-2">{opera.Titolo}</h3>
+        <h3 className="text-2xl font-bold mb-2">{opera.titolo}</h3>
       </Link>
     </motion.div>
   );

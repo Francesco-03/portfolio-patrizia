@@ -47,11 +47,9 @@ export default function GalleryClient({
   // };
 
   const filteredOpere = opere.filter((opera) => {
-    const matchesTecnica =
-      !selectedTecnica || opera.Tecnica === selectedTecnica;
-    const matchesTipo = !selectedTipo || opera.Tipo === selectedTipo;
+    const matchesTipo = !selectedTipo || opera.tipo === selectedTipo;
 
-    return matchesTecnica && matchesTipo;
+    return matchesTipo;
   });
 
   const handleTecnicaChange = (value: string) => {
@@ -159,7 +157,7 @@ export default function GalleryClient({
                 ))} */}
                 {filteredOpere.map((opera, index) => (
                   <OperaCard
-                    key={opera.documentId}
+                    key={opera._id}
                     opera={opera}
                     index={index}
                     variant="gallery"

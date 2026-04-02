@@ -1,5 +1,6 @@
 import { getOpere } from "@/lib/strapiApi";
 import GalleryClient from "@/components/GalleryClient";
+import { getOpereSanity } from "@/lib/saniti_apis";
 
 // interface GalleryPageProps {
 //   searchParams: Promise<{
@@ -15,7 +16,7 @@ export default async function Gallery() {
   //   tipo: params.tipo,
   // });
 
-  const opere = await getOpere();
+  const opere = await getOpereSanity();
 
   const categories = {
     tipo: ["Pittura", "Scultura", "Altro"],
