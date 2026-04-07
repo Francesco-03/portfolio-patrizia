@@ -1,4 +1,3 @@
-import { getOperaBySlug } from "@/lib/strapiApi";
 import OperaDetail from "@/components/OperaDetail";
 import { notFound } from "next/navigation";
 import { getOperaBySlugSanity } from "@/lib/saniti_apis";

@@ -1,4 +1,3 @@
-import { getOpere } from "@/lib/strapiApi";
 import GalleryClient from "@/components/GalleryClient";
 import { getOpereSanity } from "@/lib/saniti_apis";
 
