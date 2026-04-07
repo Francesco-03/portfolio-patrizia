@@ -104,7 +104,7 @@ export default function GalleryClient({
                   >
                     <option value="">Tutte</option>
                     {categories.tipo.map((tipo) => (
-                      <option key={tipo} value={tipo}>
+                      <option key={tipo} value={tipo.toLowerCase()}>
                         {tipo}
                       </option>
                     ))}

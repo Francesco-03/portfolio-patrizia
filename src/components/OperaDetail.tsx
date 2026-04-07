@@ -100,7 +100,7 @@ export default function OperaDetail({ opera }: OperaDetailProps) {
                     Categoria
                   </p>
                   <p className="text-lg text-verde font-semibold">
-                    {opera.tipo}
+                    {opera.tipo.charAt(0).toUpperCase() + opera.tipo.slice(1)}
                   </p>
                 </div>
               )}
