@@ -12,7 +12,10 @@ export default function PresentationSection({
   const y = useTransform(scrollYProgress, [0, 0.33], [0, 100]);
 
   return (
-    <section id="presentation" className="relative z-10 min-h-screen w-full flex items-center justify-center px-6 md:px-20 py-20">
+    <section
+      id="presentation"
+      className="relative z-10 min-h-screen w-full flex items-center justify-center px-6 md:px-20 py-20"
+    >
       <motion.div
         style={{ y }}
         className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center"

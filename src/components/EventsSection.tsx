@@ -7,26 +7,14 @@ export default function EventsSection({
 }: {
   scrollYProgress: MotionValue<number>;
 }) {
-  const y = useTransform(scrollYProgress, [0.66, 1], [0, 100]);
+  const y = useTransform(scrollYProgress, [0.15, 0.48], [0, 100]);
 
   const events = [
     {
-      title: "Mostra Personale - Forme del Silenzio",
-      date: "Novembre 2024 - Gennaio 2025",
-      location: "Galleria Contemporanea, Milano",
+      title: "Principina en plein air",
+      date: "Lunedì 10 Agosto 2026 dalle 18 alle 23",
+      location: "Passeggiata di Viale Tirreno, Principina a Mare",
       type: "upcoming",
-    },
-    {
-      title: "Art Week Milano",
-      date: "Ottobre 2024",
-      location: "Fiera Milano",
-      type: "past",
-    },
-    {
-      title: "Biennale Giovani Artisti",
-      date: "Settembre 2024",
-      location: "Venezia, Italia",
-      type: "past",
     },
   ];
 
@@ -64,7 +52,7 @@ export default function EventsSection({
               }`}
             >
               <div className="flex items-start justify-between mb-2">
-                <h3 className="text-xl font-bold">{event.title}</h3>
+                <h3 className="text-2xl font-bold">{event.title}</h3>
                 <span
                   className={`text-xs font-semibold px-3 py-1 rounded-full ${
                     event.type === "upcoming"
@@ -75,8 +63,8 @@ export default function EventsSection({
                   {event.type === "upcoming" ? "Prossimamente" : "Passato"}
                 </span>
               </div>
-              <p className="text-sm  mb-1">{event.date}</p>
-              <p className="text-sm ">{event.location}</p>
+              <p className="text-md mb-1">{event.location}</p>
+              <p className="text-md mb-1">{event.date} </p>
             </motion.div>
           ))}
         </div>

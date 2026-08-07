@@ -6,6 +6,7 @@ import WorksSection from "./WorksSection";
 import PresentationSection from "./PresentationSection";
 import BiographySection from "./BiographySection";
 import EventsSection from "./EventsSection";
+import StudioShow from "./StudioShow";
 
 export default function LandingPageClient({ opere }: { opere: Opera[] }) {
   const containerRef = useRef(null);
@@ -24,11 +25,14 @@ export default function LandingPageClient({ opere }: { opere: Opera[] }) {
       {/* SEZIONE 1.5: Biografia Artista */}
       <BiographySection scrollYProgress={scrollYProgress} />
 
+      {/* SEZIONE 1.5.1 Studio */}
+      <StudioShow scrollYProgress={scrollYProgress} />
+
       {/* SEZIONE 2: Opere */}
       <WorksSection scrollYProgress={scrollYProgress} opere={opere} />
 
       {/* SEZIONE 3: Eventi */}
-      {/* <EventsSection scrollYProgress={scrollYProgress} /> */}
+      <EventsSection scrollYProgress={scrollYProgress} />
     </div>
   );
 }
