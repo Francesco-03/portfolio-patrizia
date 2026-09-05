@@ -11,10 +11,16 @@ export default function EventsSection({
 
   const events = [
     {
-      title: "Principina en plein air",
-      date: "Lunedì 10 Agosto 2026 dalle 18 alle 23",
-      location: "Passeggiata di Viale Tirreno, Principina a Mare",
+      title: "La notte visibile della cultura",
+      date: "26 Settembre 2026 dalle 18:00 alle 24:00",
+      location: "Bottega d'arte, via Colombo 15",
       type: "upcoming",
+    },
+    {
+      title: "Principina en plein air",
+      date: "Lunedì 10 Agosto 2026 dalle 18:00 alle 23:00",
+      location: "Passeggiata di Viale Tirreno, Principina a Mare",
+      type: "",
     },
   ];
 
